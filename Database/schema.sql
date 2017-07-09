@@ -4,10 +4,43 @@ create table materia(
   des varchar(128),
   primary key(id)
 );
+create table estudiante(
+  id integer unsigned not null auto_increment,
+  nombre varchar(256),
+  ci varchar(16),
+  ru varchar(16),
+  primary key(id)
+);
 create table docente(
   id integer unsigned not null auto_increment,
   nombre varchar(256),
+  cod varchar(128),
   primary key(id)
+);
+create table clase(
+  id integer unsigned not null auto_increment,
+  docente_id integer unsigned,
+  materia_id integer unsigned,
+  par varchar(4),
+  aula varchar(12),
+  primary key(id),
+  foreign key(docente_id)
+  references docente(id)
+  on delete cascade,
+  foreign key(materia_id)
+  references materia(id)
+  on delete cascade
+);
+create table clase_estudiante(
+  clase_id integer unsigned,
+  estudiante_id integer unsigned,
+  primary key(clase_id, estudiante_id),
+  foreign key(clase_id)
+  references clase(id)
+  on delete cascade,
+  foreign key(estudiante_id)
+  references estudiante(id)
+  on delete cascade
 );
 create table pregunta(
   id integer unsigned not null auto_increment,
@@ -25,30 +58,27 @@ create table respuesta(
 );
 create table lista(
   id integer unsigned not null auto_increment,
-  materia_id integer unsigned not null,
-  docente_id integer unsigned not null,
-  cod varchar(128),
+  clase_id integer unsigned not null,
   fini datetime,
   fin datetime default null,
-  estado boolean default 0,
-  paralelo varchar(16),
   primary key(id),
-  foreign key(materia_id)
-  references materia(id)
-  on delete cascade,
-  foreign key(docente_id)
-  references docente(id)
+  foreign key(clase_id)
+  references clase(id)
   on delete cascade
 );
 create table evaluacion(
   id integer unsigned not null auto_increment,
   lista_id integer unsigned not null,
   respuesta_id  integer unsigned not null,
+  estudiante_id integer unsigned,
   primary key(id),
   foreign key(respuesta_id)
   references respuesta(id)
   on delete cascade,
   foreign key(lista_id)
   references lista(id)
+  on delete cascade,
+  foreign key(estudiante_id)
+  references estudiante(id)
   on delete cascade
 );

@@ -23,18 +23,30 @@ $app->post('/docente', function (Request $req, Response $res)
   $f = AC::addTeacher($req->getParsedBody());
   return $res->withJson($f);
 });
-// DOCENTE
-$app->post('/reqeval', function (Request $req, Response $res)
+$app->post('/estudiante', function (Request $req, Response $res)
 {
-  $f = DC::requestEval($req->getParsedBody());
+  $f = AC::addStudent($req->getParsedBody());
   return $res->withJson($f);
 });
-// ESTUDIANTE
 $app->get('/datos', function (Request $req, Response $res)
 {
-  $f = EC::getData();
+  $f = AC::getData();
   return $res->withJson($f);
 });
+$app->post('/clase', function (Request $req, Response $res)
+{
+  $f = AC::addClass($req->getParsedBody());
+  return $res->withJson($f);
+});
+$app->post('/inscribir', function (Request $req, Response $res)
+{
+  $f = AC::addStudentToClass($req->getParsedBody());
+  return $res->withJson($f);
+});
+// DOCENTE
+
+// ESTUDIANTE
+
 // PREGUNTA
 // {
 // 	"pregunta": "usted quiere continuar?",
@@ -61,10 +73,39 @@ $app->get('/datos', function (Request $req, Response $res)
 // {
 // 	"docentes": [
 // 		{
-// 			"nombre": "Lic. Montano"
+// 			"nombre": "Lic. Montano",
+//      "codigo": "asdf"
 // 		},
 // 		{
-// 			"nombre": "Lic. Sandris"
+// 			"nombre": "Lic. Sandris",
+//      "codigo": "asdfg"
 // 		}
 // 	]
+// }
+// ESTUDIANTES
+// {
+// 	"estudiantes": [
+// 		{
+// 			"nombre": "pepe Montano",
+//      "ci": "456789",
+//      "ru": "123456"
+// 		},
+// 		{
+// 			"nombre": "pepse Montano",
+//      "ci": "456789",
+//      "ru": "123456"
+// 		}
+// 	]
+// }
+// CLASE
+// {
+// 	"docenteid": "1",
+// 	"materiaid": "1",
+// 	"paralelo": "A",
+// 	"aula": "laboratorio basico"
+// }
+// INSCRIBIR
+// {
+// 	"claseid": "1",
+// 	"estudiantes": [3]
 // }

@@ -10,9 +10,9 @@ class Materia extends Model
   protected $table = 'materia';
   public $timestamps = false;
 
-  public function listas()
+  public function clases()
   {
-    return $this->hasMany('Models\Lista');
+    return $this->hasMany('Models\Clase');
   }
 
 }

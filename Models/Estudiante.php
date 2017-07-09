@@ -4,19 +4,19 @@ use Illuminate\Database\Eloquent\Model as Model;
 /**
  *
  */
-class Lista extends Model
+class Estudiante extends Model
 {
   protected $guarded = array();
-  protected $table = 'lista';
+  protected $table = 'estudiante';
   public $timestamps = false;
 
   public function evaluaciones()
   {
     return $this->hasMany('Models\Evaluacion');
   }
-  public function clase()
+  public function clases()
   {
-    return $this->belongsTo('Models\Clase');
+    return $this->belongsToMany('Models\Clase');
   }
 
 }

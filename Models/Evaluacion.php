@@ -18,5 +18,9 @@ class Evaluacion extends Model
   {
     return $this->belongsTo('Models\Lista');
   }
+  public function estudiante()
+  {
+    return $this->belongsTo('Models\Estudiante');
+  }
 
 }
