@@ -154,4 +154,26 @@ class AdminController
       return R::errorData($fields);
     }
   }
+  public static function getSubjects()
+  {
+    $resp = Materia::with(['clases'])->get();
+    foreach ($resp as $mat) {
+      foreach ($mat->clases as &$clase) {
+        $clase->nroEstudiantes = $clase->estudiantes()->count();
+      }
+    }
+    return R::success($resp);
+  }
+  public static function getClassDetail($id)
+  {
+    $c = Clase::find($id);
+    if ($c) {
+      $c->docente = ($c->docente()->select('nombre')->first())['nombre'];
+      $c->materia = ($c->materia()->select(['des', 'sigla'])->first());
+      $c->estudiantes;
+      return R::success($c);
+    } else {
+      return R::error('no existe la clase con id:'.$id);
+    }
+  }
 }

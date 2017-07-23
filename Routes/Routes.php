@@ -43,6 +43,16 @@ $app->post('/inscribir', function (Request $req, Response $res)
   $f = AC::addStudentToClass($req->getParsedBody());
   return $res->withJson($f);
 });
+$app->get('/materias', function (Request $req, Response $res)
+{
+  $f = AC::getSubjects();
+  return $res->withJson($f);
+});
+$app->get('/clase/{id:[0-9]+}', function (Request $req, Response $res, $args)
+{
+  $f = AC::getClassDetail($args['id']);
+  return $res->withJson($f);
+});
 // DOCENTE
 
 // ESTUDIANTE
