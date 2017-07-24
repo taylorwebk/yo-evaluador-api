@@ -35,19 +35,18 @@ class AdminController
   }
   public static function addMatter($data)
   {
-    $fields = ['materias'];
+    $fields = ['sigla', 'des'];
     if (R::validateData($data, $fields)) {
-      if (is_array($data['materias'])) {
-        foreach ($data['materias'] as $mat) {
-          $m = Materia::create([
-            'id' => null,
-            'sigla' => strtoupper($mat['sigla']),
-            'des' => $mat['descripcion']
+      $mat = Materia::where('sigla', '=', $data['sigla'])->first();
+      if (!$mat) {
+        $m = Materia::create([
+          'id' => null,
+          'sigla' => strtoupper($data['sigla']),
+          'des' => $data['des']
           ]);
-        }
-        return R::success('Se registraron las materias');
+          return R::success('Se registro las materia');
       } else {
-        return R::error('El campo materias debe ser un array');
+        return R::error('La materia '.$data['sigla'].' ya fue registrada');
       }
     } else {
       return R::errorData($fields);
