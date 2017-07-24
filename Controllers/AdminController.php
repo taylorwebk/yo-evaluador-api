@@ -44,7 +44,7 @@ class AdminController
           'sigla' => strtoupper($data['sigla']),
           'des' => $data['des']
           ]);
-          return R::success('Se registro las materia');
+          return self::getSubjects();
       } else {
         return R::error('La materia '.$data['sigla'].' ya fue registrada');
       }
