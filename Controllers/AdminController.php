@@ -159,6 +159,7 @@ class AdminController
     foreach ($resp as $mat) {
       foreach ($mat->clases as &$clase) {
         $clase->nroEstudiantes = $clase->estudiantes()->count();
+        $clase->docente = ($clase->docente()->select('nombre')->first())['nombre'];
       }
     }
     return R::success($resp);
